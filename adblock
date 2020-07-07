@@ -1,0 +1,308 @@
+#!/bin/sh
+
+# Script by S_ThirtyFive (https://gitlab.com/S_ThirtyFive)
+
+# Licence GPLv3
+
+# Version 0.9
+
+
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+echo -e "\n${bold}This script will add hostfile enties from Github and other sources. You can optionally add the script to cornjob to update the host file in a period of your choosing! ${normal}\n" 
+
+sleep 2 &&
+
+getusername(){
+
+    
+    }   
+
+
+USERNAME=$(echo $USER)
+if
+   [ "$USERNAME" != "root" ]
+then
+    echo -e "\nThe Script will need root/sudo privilages\n"
+else
+    getusername
+fi
+
+HOSTURLFILE=/home/$USERNAME/.config/hosturlfile
+
+check_conn() {
+
+if
+ping -c 3 -W 5 archlinux.org 1>/dev/null 2>&1
+then
+   echo -e "\n${bold}Network Connected!${normal}" && sleep 1
+       else
+   echo -e "\n${bold}No connection! Exiting${normal}" && sleep 1 && exit 0
+fi
+
+}
+
+
+mini_menu() {
+unset options
+URL0="Unified hosts = (adware + malware)"
+URL1="Unified hosts + social"
+OPT1="Advanced Menu"
+
+clear
+PS3='Please enter your choice: '
+options=(
+    "$URL0" 
+    "$OPT1"
+    "Quit"
+)
+select opt in "${options[@]}"
+do
+    case $opt in
+        "$URL0")
+            echo "Unified hosts list selected"
+            touch $HOSTURLFILE
+            echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" >>$HOSTURLFILE && main_work
+            break
+            ;;
+        "Advanced Menu")
+            echo "Loading Advanced menu"
+            advanced_menu
+            break
+            ;;
+        "Quit")
+            exit 0
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done
+
+}
+
+advanced_menu() {
+unset options
+clear
+PS3='Please enter your choice: '
+options=("Unified hosts = (adware + malware)" 
+"Unified hosts + fakenews" 
+"Unified hosts + gamblingopts" 
+"Unified hosts + porn" 
+"Unified hosts + social" 
+"Unified hosts + fakenews + gambling" 
+"Unified hosts + fakenews + porn" 
+"Unified hosts + fakenews + social" 
+"Unified hosts + gambling + porn" 
+"Unified hosts + gambling + social" 
+"Unified hosts + porn + social" 
+"Unified hosts + fakenews + gambling + porn"  
+"Unified hosts + fakenews + gambling + social" 
+"Unified hosts + fakenews + porn + social" 
+"Unified hosts + gambling + porn + social" 
+"Unified hosts + fakenews + gambling + porn + social"
+"Quit")
+select opt in "${options[@]}"
+    do
+        case $opt in
+             "Unified hosts = (adware + malware)")
+                echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts" >>$HOSTURLFILE && main_work
+                break
+                ;;
+             "Unified hosts + fakenews")
+                  echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + gambling")
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + porn")
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + social")
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/social/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + fakenews + gambling")
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling/hosts" >>$HOSTURLFILE  && main_work
+                 break
+                 ;;
+             "Unified hosts + fakenews + porn")
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-porn/hosts" >>$HOSTURLFILE  && main_work
+                 break
+                 ;;
+             "Unified hosts + fakenews + social")
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-social/hosts" >>$HOSTURLFILE  && main_work
+                 break
+                 ;;
+             "Unified hosts + gambling + porn" )
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/{bold}alternates/gambling-porn/hosts" >>$HOSTURLFILE  && main_work
+                 break
+                 ;;
+             "Unified hosts + gambling + social" )
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-social/hosts" >>$HOSTURLFILE  && main_work
+                 break
+                 ;;
+             "Unified hosts + porn + social" )
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/porn-social/hosts" >>$HOSTURLFILE  && main_work
+                 break
+                 ;;
+             "Unified hosts + fakenews + gambling + porn"  )
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + fakenews + gambling + social" )
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-social/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + fakenews + porn + social" )
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-porn-social/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + gambling + porn + social" )
+                  echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-porn-social/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+             "Unified hosts + fakenews + gambling + porn + social")
+                   echo "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn-social/hosts" >>$HOSTURLFILE && main_work
+                 break
+                 ;;
+            "Quit")
+                exit 0
+                ;;
+            *) printf '%s\n' 'invalid option';;
+        esac
+    done
+}
+
+main_work() {
+
+url_list=($(cat $HOSTURLFILE))
+hosts_file=$(mktemp)
+   for url in ${url_list[*]}; do
+      echo -e  "Downloading Host Files From $url"
+
+curl -s $url >>$hosts_file
+done
+
+start_tag='#BLOCKING_THESE_FUCKERS'
+end_tag='#THE END!'
+
+
+sudo sed -i -e "1 i $start_tag" \
+  -e "$ a $end_tag" \
+  -e "/localhost/d" \
+  -e "/ip6-localhost/d" \
+  $hosts_file
+
+sudo rm /etc/hosts
+sudo touch /etc/hosts
+
+[[ -s $hosts_file ]] && sudo bash -c "cat $hosts_file >>/etc/hosts"
+echo -e "All Done!" 
+
+}
+
+
+update_menu() {
+unset options
+PS3='It seems you have run the script before, would you like to update your existing host file?'
+options=("Update from existing configuration"
+    "Start fresh"
+    "Quit")
+
+select opt in "${options[@]}"
+    do
+        case $opt in
+
+        "Update from existing configuration")
+            main_work
+            break
+            ;;
+        "Start fresh")
+            rm -f $HOSTURLFILE
+            mini_menu
+            ;;
+        "Quit")
+            exit 0
+            ;;
+        *) echo "invalid option $REPLY";;
+    esac
+done
+
+}
+
+fresh_hosts(){
+
+fresh_hosts_file=$(mktemp)
+
+start_tag='#The orginal host file is moved to /etc/hosts.p'
+LH='localhost'
+ipv4a='127.0.0.1'
+ipv4b='127.0.1.1'
+i6a='::1'
+i6b='ff02::1'
+i6c='ff02::2'
+i6la='ip6-localhost'
+i6lb='ip6-loopback'
+i6lc='ip6-allnodes'
+i6ld='ip6-allrouters'
+
+end_tag='#Run adblock -r to continue blocking!'
+
+
+sudo sed -i -e "1 i $start_tag \n $ipv4a $LH \n $ipv4b $HOSTNAME \n $i6a $LH $i6la $i6lb \n $i6b $i6lc \n $i6c $i6ld " \
+  -e "$ a $end_tag" \
+  -e "/localhost/d" \
+  -e "/ip6-localhost/d" \
+  $hosts_file
+
+
+}
+
+option_less(){
+
+[[ ! -f $HOSTURLFILE ]] && mini_menu && exit 0 || [[ -f $HOSTURLFILE ]] && update_menu && exit 0
+
+}
+
+check_conn 
+
+
+if (( $# == 0 )); then
+    option_less
+else
+    for arg in "$@"; do
+       case $arg in
+           -u | --update)
+               [[  -f $HOSTURLFILE  ]] && main_work || echo -e "Config file does not exist!" && sleep 2
+               exit 0
+           ;;
+           -p | --pause)           
+               sudo mv /etc/hosts /etc/hosts.p && fresh_hosts
+               exit 0
+           ;;
+            -r | --resume)
+               sudo mv /etc/hosts.p /etc/hosts 
+               exit 0
+           ;;
+            -b | --block)
+		[[ -z "$2" ]] && printf "\n Please specify the address that you would like to
+		block!" ||  sudo bash -c "echo "$2" >>/etc/hosts" && printf "$2 added to your hosts file"
+	    ;;
+
+	    -a | --add-url)
+		[[ -z "$2" ]] && printf "\n Please specify the URL with hosts list!"  || echo "$2"
+		>>$HOSTURLFILE && printf "$2 added to your URL file"
+	    ;;
+
+   esac
+done
+fi
+exit 0
+
+
+
+
+
