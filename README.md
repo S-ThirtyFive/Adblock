@@ -5,7 +5,7 @@ The script uses [StevenBlack](https://github.com/StevenBlack/hosts) to block ads
 **Install**
 
 - `git clone https://github.com/S-ThirtyFive/Adblock.git`
-- `cd s35adblock`
+- `cd Adblock`
 - `sudo make install`
 
 **Uninstall**
